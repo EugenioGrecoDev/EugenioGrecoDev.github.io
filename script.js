@@ -1,70 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const links = document.querySelectorAll('.nav-link');
+const links = document.querySelectorAll(".nav-link");
 
-  // Tracciamo hero, activities, about e footer
-  const sections = document.querySelectorAll('section[id]');
+const observed = [ "activities", "about", "contact"];
+const sections = observed.map(id => document.getElementById(id));
 
-  const setActive = (id) => {
-    links.forEach(link => {
-      const href = link.getAttribute('href');
-      link.classList.toggle('active', href === `#${id}`);
-    });
-  };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
 
-  // CLICK: scroll smooth + active immediato
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href');
-      const target = document.querySelector(targetId);
-
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.replaceState(null, '', targetId);
-        setActive(targetId.replace('#', ''));
-      }
-    });
-  });
-
-  // SCROLL: aggiorna active in base alla sezione visibile
-  window.addEventListener('scroll', () => {
-    let current = null;
-    const scrollPos = window.scrollY + window.innerHeight/2;
-
-    sections.forEach(sec => {
-      const top = sec.offsetTop;
-      const bottom = top + sec.offsetHeight;
-
-      if (scrollPos >= top && scrollPos < bottom) {
-        current = sec.id;
-      }
-    });
-
-    if (current) {
-      setActive(current);
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.content === id);
+      });
     }
   });
-
-  // Attiva link da hash iniziale
-  if (location.hash) {
-    setActive(location.hash.replace('#', ''));
-  }
-
-const hero = document.querySelector('.hero');
-
-window.addEventListener('scroll', () => {
-  const fadeStart = 0;
-  const fadeEnd = window.innerHeight * 0.3;
-
-  const scroll = window.scrollY;
-
-  // Calc and clamp
-  let opacity = 1 - (scroll - fadeStart) / (fadeEnd - fadeStart);
-  opacity = Math.max(0, Math.min(1, opacity));
-
-  hero.style.opacity = opacity;
+}, {
+  root: null,
+  threshold: 0.5,
+  rootMargin: "-33% 0px -33% 0px"
 });
 
+
+sections.forEach(sec => observer.observe(sec));
+
+links.forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const target = link.dataset.target;
+
+    if (target === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const section = document.getElementById(link.dataset.content);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+});
 
 
 });
