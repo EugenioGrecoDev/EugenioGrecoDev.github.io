@@ -91,8 +91,16 @@
   function initInnerPage(root) {
     const backBtn = root.querySelector('.back-btn');
     if (backBtn) backBtn.addEventListener('click', removeView);
-
-    // TODO: call other initialisers, e.g. `initIcons(root)`
+    
+    const boxes = root.querySelectorAll('.inner-box');
+    boxes.forEach(box => {
+      box.addEventListener('click', () => {
+        boxes.forEach(other => {
+          if (other !== box) other.classList.remove('zoom');
+        });
+        box.classList.toggle('zoom');
+      });
+    });
   }
 
   // ----- event binding --------------------------------------------------

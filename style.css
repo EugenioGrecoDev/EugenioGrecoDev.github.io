@@ -3,7 +3,7 @@
    ************************** */
 
 :root {
-    --bg: #05050a;
+    --bg: oklch(25% 0.03 230);
     --text: #e2e8f0;
     --nav-bg: rgba(10, 10, 20, 0.7);
 
@@ -32,12 +32,9 @@
 html, body { height: 100%; }
 html { scroll-behavior: smooth; }
 
-.achieved-skill-icon svg { 
-    width: 33px; height: 33px; background-color: var(--accent-soft);
-}
-
 body {
-    background: var(--bg) url("assets/background.jpg") center/cover no-repeat fixed;
+    background: radial-gradient(circle, oklch(35% 0.06 215) 0%, var(--bg) 12%);
+    background-size: 10px 10px;
     margin: 0;
     padding: 0;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
@@ -58,6 +55,7 @@ header { position: sticky; top: 0; }
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 0 20px;
 
     background: var(--nav-bg);
@@ -94,6 +92,7 @@ header { position: sticky; top: 0; }
     align-items: center;
     gap: 12px;
 }
+@media (max-width:480px) { .nav-right { gap: 4px;}}
 
 .nav-link {
     color: var(--muted);
@@ -112,30 +111,6 @@ header { position: sticky; top: 0; }
     box-shadow: 0 0 8px var(--neon-glow);
 }
 
-@media (max-width: 480px) {
-  .navbar {
-    height: auto;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 12px;
-  }
-
-  .nav-left,
-  .nav-right {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .subtitle {
-    font-size: 0.85rem;
-  }
-
-  .nav-link {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-  }
-}
-
 
 /* **************************
    MAIN CONTENT
@@ -144,6 +119,7 @@ header { position: sticky; top: 0; }
 .main-content {
     padding: 0 24px;
 }
+@media (max-width:480px) { .main-content { padding: 0 12px;}}
 
 /* **************************
     FANCY BACKGROUND WAVES
@@ -204,9 +180,15 @@ header { position: sticky; top: 0; }
 }
 @keyframes manycolors {
     0% { color: var(--accent); }
-    30% { color: var(--neon1); }
+    15% { color: var(--accent); }
+    20% { color: var(--neon1); }
+    30% { color: var(--accent); }
+    45% { color: var(--accent); }
     50% { color: var(--neon2); }
-    70% { color: var(--neon3); }
+    60% { color: var(--accent); }
+    75% { color: var(--accent); }
+    80% { color: var(--neon3); }
+    90% { color: var(--accent); }
     100% { color: var(--accent); }
 }
 
@@ -225,15 +207,10 @@ header { position: sticky; top: 0; }
 
     padding: 24px;
     display: grid;
-    gap: 24px;
-    grid-template-columns: 1fr;
+    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
 
     border-bottom: var(--section-line);
-}
-@media (min-width: 520px) {
-    .activities {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 .activities {
@@ -267,11 +244,10 @@ body.activity-active .activities {
     padding 1s ease;
 }
 
+#app { padding-block: 24px; }
 #app section {
-  margin-top: 1rem;
-  padding: 0 1rem;
   max-width: 1000px;
-  margin: 1rem auto;
+  margin: 0 auto;
   border: 1px solid var(--neon-glow);
   box-shadow: 0 0 12px var(--neon-glow);
   opacity: 0;
@@ -289,13 +265,38 @@ body.activity-active .activities {
     color: var(--accent-soft);
     text-shadow: 0 0 10px var(--neon-glow);
 }
-#app h4 {
-  margin: 10px;
-  line-height: 0;
+#app h4 { margin: 10px; }
+#app p { color: var(--muted); }
+#app .inner-section { padding-inline: 1rem; }
+#app .lightbox-section {
+    display: flex; flex-wrap: wrap;
+    justify-content: center;
 }
-#app p {
-    color: var(--muted);
+#app .inner-box { 
+    margin: 0.5% 0.5%;
+    border-radius: 12px;
+    border: 1px solid var(--soft-glow);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    aspect-ratio: 1 / 1;
+    width: 48%; 
+    background-color: var(--soft-glow);
+    transition: transform .15s, box-shadow .2s;
 }
+#app .inner-box:hover { transform: translateY(-4px);
+    box-shadow: 0 0 20px var(--strong-glow); }
+#app .inner-box p {display: none;}
+@media (max-width:480px) {
+    #app .inner-box.zoom { width: 99%;}
+}
+#app .inner-box.zoom p {display: block; text-align: justify; margin-inline: 1rem;}
+/*.achieved-skill-icon svg { 
+    width: 33px; height: 33px; background-color: var(--accent-soft);
+}*/
 
 /* BUTTONS */
 
@@ -324,6 +325,17 @@ body.activity-active .activities {
     transform: translateY(-4px);
     box-shadow: 0 0 20px var(--strong-glow);
 }
+@media (max-width:480px) {
+    .activities {
+        padding-inline: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .activity-btn {
+        width: 45%;
+        margin: 6px auto;
+    }
+}
 
 #theme1 {
     background: var(--neon1-soft);
@@ -350,8 +362,8 @@ body.activity-active .activities {
 #theme3:hover { box-shadow: 0 0 20px var(--neon3); }
 
 .activity-icon{
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     opacity: 0.7;
 }
 
