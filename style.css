@@ -44,7 +44,9 @@ body {
     transition: background .3s, color .3s;
 }
 
-header { position: sticky; top: 0; }
+header { position: fixed; top: 0; left: 0; width: 100%;}
+main {padding-top: var(--nav-height); padding-inline: 24px;}
+@media (max-width:480px) { main { padding-inline: 12px;}}
 
 /* **************************
    NAVIGATION BAR
@@ -111,16 +113,6 @@ header { position: sticky; top: 0; }
     box-shadow: 0 0 8px var(--neon-glow);
 }
 
-
-/* **************************
-   MAIN CONTENT
-   ************************** */
-
-.main-content {
-    padding: 0 24px;
-}
-@media (max-width:480px) { .main-content { padding: 0 12px;}}
-
 /* **************************
     FANCY BACKGROUND WAVES
    ************************** */
@@ -128,7 +120,7 @@ header { position: sticky; top: 0; }
 .fancy-bg-waves {
   position: fixed;
   inset: 0;
-  overflow: hidden;
+
   z-index: 0;
   pointer-events: none;
 }
@@ -290,8 +282,8 @@ body.activity-active .activities {
 #app .inner-box:hover { transform: translateY(-4px);
     box-shadow: 0 0 20px var(--strong-glow); }
 #app .inner-box p {display: none;}
-@media (max-width:480px) {
-    #app .inner-box.zoom { width: 99%;}
+@media (max-width:768px) {
+    #app .inner-box.zoom { width: 99%; aspect-ratio: auto;}
 }
 #app .inner-box.zoom p {display: block; text-align: justify; margin-inline: 1rem;}
 /*.achieved-skill-icon svg { 
@@ -511,6 +503,6 @@ body.activity-active .activities {
 .footer-credits-line {
     margin: 40px 0;
     text-align: center;
-    color: white;
+    color: var(--accent-soft);
     border-top: var(--section-line);
 }
