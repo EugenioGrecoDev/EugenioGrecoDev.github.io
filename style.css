@@ -31,6 +31,8 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 html { scroll-behavior: smooth; }
+a { color: var(--strong-glow); text-decoration: none; }
+a:hover { color: var(--accent); }
 
 body {
     background: radial-gradient(circle, oklch(35% 0.06 215) 0%, var(--bg) 12%);
@@ -274,18 +276,20 @@ body.activity-active .activities {
     justify-content: center;
     align-items: center;
     text-align: center;
-    aspect-ratio: 1 / 1;
+    box-shadow: 0 0 8px var(--soft-glow);
     width: 48%; 
     background-color: var(--soft-glow);
     transition: transform .15s, box-shadow .2s;
 }
 #app .inner-box:hover { transform: translateY(-4px);
     box-shadow: 0 0 20px var(--strong-glow); }
-#app .inner-box p {display: none;}
+#app .inner-box p,
+#app .inner-box a {display: none;}
 @media (max-width:768px) {
     #app .inner-box.zoom { width: 99%; aspect-ratio: auto;}
 }
-#app .inner-box.zoom p {display: block; text-align: justify; margin-inline: 1rem;}
+#app .inner-box.zoom p,
+#app .inner-box.zoom a {display: block; text-align: justify; margin-inline: 1rem;}
 /*.achieved-skill-icon svg { 
     width: 33px; height: 33px; background-color: var(--accent-soft);
 }*/
@@ -489,15 +493,6 @@ body.activity-active .activities {
 .footer-item {
     display: flex;
     gap: 12px;
-}
-
-.footer a {
-    color: var(--muted);
-    text-decoration: none;
-}
-
-.footer a:hover {
-    color: var(--accent);
 }
 
 .footer-credits-line {
